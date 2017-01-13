@@ -1,8 +1,10 @@
 #!/bin/bash
 #
 # This is to setup the etherstub and virtual switches/natting
+# Maintainer: scoday@$$$.com #
 
 # Define Variables:
+IPSUBNET=192.168.1.0/24
 IPGW=192.168.1.254
 HOSTNAME=hnd-zgw01
 ZONELOC="/zones/ScoZone/01/"
@@ -34,8 +36,8 @@ configuredns() {
 
 enablenat() {
   routeadm -u -e ipv4-forwarding
-  echo "map iwi0 192.168.1.0/24 -> 0.0.0.0/32 portmap tcp/udp auto" >> /etc/ipf/ipnat.conf
-  echo "map iwi0 192.168.1.0/24 -> 0.0.0.0/32" >> /etc/ipf/ipnat.conf
+  echo "map net1 $IPSUBNET -> 0.0.0.0/32 portmap tcp/udp auto" >> /etc/ipf/ipnat.conf
+  echo "map net1 $IPSUBNET -> 0.0.0.0/32" >> /etc/ipf/ipnat.conf
 }
 
 startfilter() {
