@@ -1,0 +1,20 @@
+# svccfg
+svc:> select dns/client
+svc:/network/dns/client> setprop config/search = astring: \
+("us.company.com" "eu.company.com" "companya.com" "companyb.com" "company.com" )
+svc:/network/dns/client> setprop config/nameserver = net_address: \
+( 138.2.202.15 138.2.202.25 )
+svc:/network/dns/client> select dns/client:default
+svc:/network/dns/client:default> refresh
+svc:/network/dns/client:default> validate
+svc:/network/dns/client:default> select name-service/switch
+svc:/system/name-service/switch> setprop config/host = astring: "files dns"
+svc:/system/name-service/switch> select system/name-service/switch:default
+svc:/system/name-service/switch:default> refresh
+svc:/system/name-service/switch:default> validate
+svc:/system/name-service/switch:default> 
+# svcadm enable dns/client
+# svcadm refresh name-service/switch
+# grep host /etc/nsswitch.conf
+hosts:  files dns
+# cat /etc/resolv.conf
