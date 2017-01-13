@@ -19,7 +19,7 @@ addvnics() {
   dladm show-vnic
 }
 
-addipplub() {
+addipplumb() {
   echo "$IPGW    $HOSTNAME" >> /etc/hosts
   ifconfig vnic0 plumb
   ifconfig vnic0 $HOSTNAME netmask + broadcast + up
@@ -45,4 +45,10 @@ startfilter() {
   ipnat -l
 }
 
-
+# Use what you need, leave the rest.. #
+addstub
+addvnics
+addipplumb
+configuredns
+enablenat
+startfilter
